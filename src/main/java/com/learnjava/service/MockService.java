@@ -245,7 +245,7 @@ public class MockService {
         IntStream is9 = IntStream.rangeClosed(1, cantidad);
         IntStream is10 = IntStream.rangeClosed(1, cantidad);
 
-        if (isParallel){
+        if (isParallel) {
             is.parallel();
             is1.parallel();
             is2.parallel();
@@ -390,7 +390,7 @@ public class MockService {
 
         ExecutorService yourOwnExecutor = Executors.newFixedThreadPool(20000);
 
-        List<CompletableFuture> listFutures = new ArrayList<>();
+        CopyOnWriteArrayList<CompletableFuture> listFutures = new CopyOnWriteArrayList<>();
 
         IntStream is = IntStream.rangeClosed(0, cantidad);
         IntStream is1 = IntStream.rangeClosed(0, cantidad);
@@ -469,13 +469,17 @@ public class MockService {
 
         System.out.println("WAITING ALL GET");
 
-        CompletableFuture[] completableFuturesArray = new CompletableFuture[listFutures.size()];
+        CompletableFuture<ResponseEntity>[] completableFuturesArray = new CompletableFuture[listFutures.size()];
         listFutures.toArray(completableFuturesArray);
         CompletableFuture all = CompletableFuture.allOf(completableFuturesArray);
         all.join();
         System.out.println("FINISH ALL GET");
 
         timeTaken();
+        System.out.println(completableFuturesArray.length);
+        System.out.println("============================================================================");
+        Arrays.stream(completableFuturesArray).forEach(re ->
+                System.out.println(re.join().getStatusCodeValue() + "   \n   " + re.join().getBody()));
         yourOwnExecutor.shutdownNow();
     }
 
@@ -483,7 +487,7 @@ public class MockService {
 
         ExecutorService yourOwnExecutor = Executors.newCachedThreadPool();
 
-        List<CompletableFuture> listFutures = new ArrayList<>();
+        CopyOnWriteArrayList<CompletableFuture> listFutures = new CopyOnWriteArrayList<>();
 
         IntStream is = IntStream.rangeClosed(0, cantidad);
         IntStream is1 = IntStream.rangeClosed(0, cantidad);
@@ -562,13 +566,18 @@ public class MockService {
 
         System.out.println("WAITING ALL GET");
 
-        CompletableFuture[] completableFuturesArray = new CompletableFuture[listFutures.size()];
+        CompletableFuture<ResponseEntity>[] completableFuturesArray = new CompletableFuture[listFutures.size()];
         listFutures.toArray(completableFuturesArray);
         CompletableFuture all = CompletableFuture.allOf(completableFuturesArray);
         all.join();
         System.out.println("FINISH ALL GET");
 
         timeTaken();
+
+        System.out.println(completableFuturesArray.length);
+        System.out.println("============================================================================");
+        Arrays.stream(completableFuturesArray).forEach(re ->
+                System.out.println(re.join().getStatusCodeValue() + "   \n   " + re.join().getBody()));
         yourOwnExecutor.shutdownNow();
     }
 

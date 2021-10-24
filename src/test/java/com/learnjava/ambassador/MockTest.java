@@ -66,12 +66,14 @@ class MockTest {
     }
 
     @RepeatedTest(5)
-    void getUsersNoFutureEach_parallel() {
+    void getUsersNoFutureEach_parallel() throws InterruptedException {
+        Thread.sleep(5000);
         mockService.getUsersNoFutureForEach(cantidad, true);
     }
 
     @RepeatedTest(5)
-    void getUsersNoFutureForEach_CacheThreadPool_parallel() {
+    void getUsersNoFutureForEach_CacheThreadPool_parallel() throws InterruptedException {
+        Thread.sleep(5000);
         mockService.getUsersNoFutureForEach_CacheThreadPool(cantidad, true);
     }
 

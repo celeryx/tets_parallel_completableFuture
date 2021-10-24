@@ -7,6 +7,11 @@ import org.junit.jupiter.api.RepeatedTest;
 class MockTest {
 
     private MockService mockService = new MockService();
+
+    //cantidad de elemntos para los FOR.
+    // son 11 loops.
+    // por lo tanto 11 * 720 = 7920 request en el mismo MS
+    // modificar este valor si su mock local no lo resiste. I/O REQUEST EXCEPTION
     Integer cantidad = 720;
 
     @RepeatedTest(5)

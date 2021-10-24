@@ -13,6 +13,7 @@ public class Mock {
     public ResponseEntity getUsers() {
 
         String url = new StringBuilder().append("http://localhost:3001/users").toString();
+        //String url = new StringBuilder().append("https://mock.codes/200").toString();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity request = new HttpEntity(headers);
         ResponseEntity re = restTemplate.exchange(url, HttpMethod.GET, request, String.class);

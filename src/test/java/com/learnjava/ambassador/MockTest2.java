@@ -1,12 +1,16 @@
 package com.learnjava.ambassador;
 
-import com.learnjava.service.MockService;
+import com.learnjava.service.MockService2;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.RepeatedTest;
 
-class MockTest {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-    private MockService mockService = new MockService();
+class MockTest2 {
+
+    private ExecutorService yourOwnExecutor = Executors.newCachedThreadPool();
+    private MockService2 mockService = new MockService2();
 
     //cantidad de elemntos para los FOR.
     // son 11 loops.
@@ -17,25 +21,25 @@ class MockTest {
     @RepeatedTest(3)
     void getUsers() throws InterruptedException {
         Thread.sleep(5000);
-        mockService.getUsers(cantidad, false);
+        mockService.getUsers(cantidad, false, yourOwnExecutor);
     }
 
     @RepeatedTest(3)
     void getUsers_parallel() throws InterruptedException {
         Thread.sleep(5000);
-        mockService.getUsers(cantidad, true);
+        mockService.getUsers(cantidad, true, yourOwnExecutor);
     }
 
     @RepeatedTest(3)
     void getUsers_CacheTP() throws InterruptedException {
         Thread.sleep(5000);
-        mockService.getUsers_CacheThreadPool(cantidad, false);
+        mockService.getUsers_CacheThreadPool(cantidad, false, yourOwnExecutor);
     }
 
     @RepeatedTest(3)
     void getUsers_CacheTP_parallel() throws InterruptedException {
         Thread.sleep(5000);
-        mockService.getUsers_CacheThreadPool(cantidad, true);
+        mockService.getUsers_CacheThreadPool(cantidad, true, yourOwnExecutor);
     }
 
 
@@ -53,24 +57,24 @@ class MockTest {
 
     @RepeatedTest(3)
     void getUsersNoFutureEach() {
-        mockService.getUsersNoFutureForEach(5, false);
+        mockService.getUsersNoFutureForEach(5, false, yourOwnExecutor);
     }
 
     @RepeatedTest(3)
     void getUsersNoFutureForEach_CacheThreadPool() {
-        mockService.getUsersNoFutureForEach_CacheThreadPool(10, false);
+        mockService.getUsersNoFutureForEach_CacheThreadPool(10, false, yourOwnExecutor);
     }
 
     @RepeatedTest(3)
     void getUsersNoFutureEach_parallel() throws InterruptedException {
         Thread.sleep(5000);
-        mockService.getUsersNoFutureForEach(cantidad, true);
+        mockService.getUsersNoFutureForEach(cantidad, true, yourOwnExecutor);
     }
 
     @RepeatedTest(3)
     void getUsersNoFutureForEach_CacheThreadPool_parallel() throws InterruptedException {
         Thread.sleep(5000);
-        mockService.getUsersNoFutureForEach_CacheThreadPool(cantidad, true);
+        mockService.getUsersNoFutureForEach_CacheThreadPool(cantidad, true, yourOwnExecutor);
     }
 
     @RepeatedTest(3)
@@ -89,12 +93,12 @@ class MockTest {
     @RepeatedTest(3)
     void getUsersLambda_CacheThreadPool() throws InterruptedException {
         Thread.sleep(5000);
-        mockService.getUsersLambda_CacheThreadPool(cantidad, false);
+        mockService.getUsersLambda_CacheThreadPool(cantidad, false, yourOwnExecutor);
     }
 
     @RepeatedTest(3)
     void getUsersLambda_CacheThreadPool_parallel() throws InterruptedException {
         Thread.sleep(5000);
-        mockService.getUsersLambda_CacheThreadPool(cantidad, true);
+        mockService.getUsersLambda_CacheThreadPool(cantidad, true, yourOwnExecutor);
     }
 }

@@ -8,21 +8,18 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 
 import static com.learnjava.util.CommonUtil.startTimer;
 import static com.learnjava.util.CommonUtil.timeTaken;
 import static java.util.stream.Collectors.toList;
 
-public class MockService {
+public class MockService2 {
 
     private Mock mock = new Mock();
 
 
-    public void getUsers(Integer cantidad, boolean isParallel) {
-
-        ExecutorService yourOwnExecutor = Executors.newFixedThreadPool(300000);
+    public void getUsers(Integer cantidad, boolean isParallel, ExecutorService yourOwnExecutor) {
 
         List<CompletableFuture<ResponseEntity>> listFutures = new ArrayList<>();
 
@@ -129,12 +126,10 @@ public class MockService {
         /*System.out.println("============================================================================");
         responses.forEach(re ->
                 System.out.println(re.getStatusCodeValue() + "   \n   " + re.getBody()));*/
-        yourOwnExecutor.shutdownNow();
     }
 
-    public void getUsers_CacheThreadPool(Integer cantidad, boolean isParallel) {
+    public void getUsers_CacheThreadPool(Integer cantidad, boolean isParallel, ExecutorService yourOwnExecutor) {
 
-        ExecutorService yourOwnExecutor = Executors.newCachedThreadPool();
 
         CopyOnWriteArrayList<CompletableFuture<ResponseEntity>> listFutures = new CopyOnWriteArrayList<>();
 
@@ -242,14 +237,11 @@ public class MockService {
        /* System.out.println("============================================================================");
         responses.forEach(re ->
                 System.out.println(re.getStatusCodeValue() + "   \n   " + re.getBody()));*/
-
-        yourOwnExecutor.shutdownNow();
     }
 
-    public void getUsersLambda_CacheThreadPool(Integer cantidad, boolean isParallel) {
+    public void getUsersLambda_CacheThreadPool(Integer cantidad, boolean isParallel, ExecutorService yourOwnExecutor) {
 
         System.out.println("getUsersLambda_CacheThreadPool PARALLEL: " + isParallel);
-        ExecutorService yourOwnExecutor = Executors.newCachedThreadPool();
 
         List<CompletableFuture<ResponseEntity>> allRe = new ArrayList<>();
 
@@ -318,7 +310,6 @@ public class MockService {
         responses.forEach(re ->
                 System.out.println(re.getStatusCodeValue() + "   \n   " + re.getBody()));*/
 
-        yourOwnExecutor.shutdownNow();
     }
 
     public void getUsersNoCustomExecutor(Integer cantidad, boolean isParallel) {
@@ -433,9 +424,8 @@ public class MockService {
 
     }
 
-    public void getUsersNoFutureForEach(Integer cantidad, boolean isParallel) {
+    public void getUsersNoFutureForEach(Integer cantidad, boolean isParallel, ExecutorService yourOwnExecutor) {
 
-        ExecutorService yourOwnExecutor = Executors.newFixedThreadPool(20000);
 
         CopyOnWriteArrayList<CompletableFuture<ResponseEntity>> listFutures = new CopyOnWriteArrayList<>();
 
@@ -537,13 +527,11 @@ public class MockService {
         System.out.println(responses.size());
         /*System.out.println("============================================================================");
         responses.forEach(re ->
-                System.out.println(re.getStatusCodeValue() + "   \n   " + re.getBody()));*/
-        yourOwnExecutor.shutdownNow();
+                System.out.println(re.getStatusCodeValue() + "   \n   " + re.getBody()));
+        yourOwnExecutor.shutdownNow();*/
     }
 
-    public void getUsersNoFutureForEach_CacheThreadPool(Integer cantidad, boolean isParallel) {
-
-        ExecutorService yourOwnExecutor = Executors.newCachedThreadPool();
+    public void getUsersNoFutureForEach_CacheThreadPool(Integer cantidad, boolean isParallel, ExecutorService yourOwnExecutor) {
 
         CopyOnWriteArrayList<CompletableFuture<ResponseEntity>> listFutures = new CopyOnWriteArrayList<>();
 
@@ -647,7 +635,6 @@ public class MockService {
         /*System.out.println("============================================================================");
         responses.forEach(re ->
                 System.out.println(re.getStatusCodeValue() + "   \n   " + re.getBody()));*/
-        yourOwnExecutor.shutdownNow();
     }
 
     public void getUsersNoFutureForEachAndGetHttp(Integer cantidad, boolean isParallel) {
@@ -733,5 +720,4 @@ public class MockService {
         timeTaken();
 
     }
-
 }
